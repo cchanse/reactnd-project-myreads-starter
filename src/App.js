@@ -2,7 +2,7 @@ import React from "react";
 import * as BooksAPI from "./BooksAPI";
 import Bookshelf from "./Bookshelf";
 import Search from "./Search";
-import { Route, Link } from "react-router-dom";
+import { Route, Link, Switch } from "react-router-dom";
 import "./App.css";
 
 class BooksApp extends React.Component {
@@ -42,34 +42,46 @@ class BooksApp extends React.Component {
   };
 
   render() {
+
+    // Create content for 404 page not found error
+    const NoMatch = ({ location }) => (
+      <div>
+        <h3>No match for <code>{location.pathname}</code></h3>
+      </div>
+    )
+
     return (
       <div className="app">
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <div className="list-books">
-              <div className="list-books-title">
-                <h1>MyReads</h1>
-              </div>
-              <div className="list-books-content">
-                <div>
-                  <Bookshelf
-                    books={this.state.books}
-                    onChangeStatus={this.changeShelfStatus}
-                  />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div className="list-books">
+                <div className="list-books-title">
+                  <h1>MyReads</h1>
+                </div>
+                <div className="list-books-content">
+                  <div>
+                    <Bookshelf
+                      books={this.state.books}
+                      onChangeStatus={this.changeShelfStatus}
+                    />
+                  </div>
+                </div>
+
+                <div className="open-search">
+                  <Link to="/search"><button className="open-search">Search books</button></Link>
                 </div>
               </div>
-
-              <div className="open-search">
-                <Link to="/search"><button className="open-search">Search books</button></Link>
-              </div>
-            </div>
-          )}
-        />
-        <Route path="/search" render={() => (
-          <Search books={this.state.books} onChangeStatus={this.changeShelfStatus} />
-        )} />
+            )}
+          />
+          <Route path="/search" render={() => (
+            <Search books={this.state.books} onChangeStatus={this.changeShelfStatus} />
+          )} />
+          {/* Create a route to handle 404 page not found error */}
+          <Route component={NoMatch} />
+        </Switch>
 
         {/*
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.
