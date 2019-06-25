@@ -12,20 +12,15 @@ class Search extends React.Component {
   };
 
   updateQuery = (query) => {
-
     this.setState(()=> ({
       query: query.trim()
     }))
 
-    BooksAPI.search(this.state.query).then(books => books ? this.setState({books}) : []);
-    this.setState({
-      query:query
+    BooksAPI.search(this.state.query)
+    // .then(books => console.log(books));
+    .then(books => books ? this.setState({books}) : [], (reason) => {
+      console.log(reason);
     });
-
-  }
-
-  clearQuery = () => {
-    this.updateQuery('');
   }
 
   render() {
@@ -36,7 +31,7 @@ class Search extends React.Component {
    * @description Filters books displayed by query
    * @param {string} query - The search term entered into input field
   */
-    const showingBooks = query === '' ? books : books.filter((b)=> (
+    const showingBooks = query === '' ? [] : books.filter((b)=> (
       b.title.toLowerCase().includes(query.toLowerCase())
     ))
 
