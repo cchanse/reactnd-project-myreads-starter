@@ -31,8 +31,7 @@ class BookShelf extends React.Component {
                       style={{
                         width: 128,
                         height: 193,
-                        backgroundImage: `url(${book.imageLinks
-                          .smallThumbnail})`
+                        backgroundImage:`url(${book.imageLinks && book.imageLinks.thumbnail?`${book.imageLinks.thumbnail}`:`http://via.placeholder.com/128x193?text=No%20Cover`})`
                       }}
                     />
                     <div className="book-shelf-changer">
