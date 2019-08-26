@@ -3,6 +3,10 @@ import React from "react";
 const Book = (props) => {
 
   const { book, onChangeStatus } = props;
+  let bookShelf = book.shelf;
+  if (bookShelf === undefined) {
+    bookShelf = "none";
+  }
 
   return (
     <li key={book.id} className="book">
@@ -18,7 +22,7 @@ const Book = (props) => {
             }}
           />
           <div className="book-shelf-changer">
-            <select value={book.shelf} onChange={event => onChangeStatus(book, event)}>
+            <select value={bookShelf} onChange={event => onChangeStatus(book, event)}>
               <option value="move" disabled>
                 Move to...
               </option>

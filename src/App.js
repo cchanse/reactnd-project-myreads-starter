@@ -28,7 +28,6 @@ class BooksApp extends React.Component {
    * @param {event} event - When user selects shelf option
   */
   changeShelfStatus = (book, event) => {
-
     //* first update the shelf for the book selected */
     BooksAPI.update(book, event.target.value)
     .then(() => {
