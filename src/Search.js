@@ -34,23 +34,12 @@ class Search extends React.Component {
   //once the query is updated and the returned books are found then
   render() {
     const { query } = this.state;
-    const { books, onChangeStatus } = this.props;
+    const { onChangeStatus } = this.props;
 
   /**
    * @description Filters books displayed by query; returns new books including existing books
    * @param {string} query - The search term entered into input field
   */
-
-    const totalbooks = books.concat(this.state.searchResults);
-
-    const uniqueTotalBooks = Array.from(new Set(totalbooks.map(a => a.id)))
-    .map(id => {
-      return totalbooks.find(a => a.id === id)
-    })
-
-    const showingBooks = query === '' ? [] : uniqueTotalBooks.filter((b)=> (
-      b.title.toLowerCase().includes(query.toLowerCase())
-    ))
 
     return (
       <div>
@@ -72,7 +61,7 @@ class Search extends React.Component {
 
         <div className="search-books-results">
         <ol className="books-grid">
-          {showingBooks.length > 0 && showingBooks.map((book) => (
+          {this.state.searchResults.length > 0 && this.state.searchResults.map((book) => (
               <Book book={book} onChangeStatus={onChangeStatus} />
           ))}
         </ol>
